@@ -1,0 +1,89 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roboter Simulation</title>
+  <style>
+    canvas { display: block; }
+    #selectionBox {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10; /* Ensure the selection box is in front of the canvas */
+    }
+    div{
+        margin: 20;
+        margin-top: 30;
+        width: 100;
+    }
+    button, input {
+        margin: 10;
+        width: 80;
+        height: 40;
+        text-align: center;
+    }
+    .divZ, .divX{
+        background-color:rgb(67, 94, 247);
+        float: left;
+    }
+  </style>
+  <script lang="javascript">
+        const wsUrl = new URL(document.location);
+        wsUrl.protocol = wsUrl.protocol.replace('http', 'ws');
+        wsUrl.pathname = 'echo';
+        const socket = new WebSocket(wsUrl.toString());
+        
+
+        socket.onopen = () => { console.log('Connected');  
+                                pingInterval = setInterval(() => {  lastPingRequest = Date.now();
+                                                                                socket.send("Ping");
+                                                                            }, 5000)};    
+
+        socket.onclose = (event) => { 
+            console.log((event.wasClean) ? 'Disconnected' :  'Connection break: ' + (event.reason || event.code)); 
+            clearInterval(pingInterval);
+        }
+
+        socket.onmessage = (event) => {
+            console.log("message:", event.data);
+            if(!event.data.includes("{")){return;}
+            const obj = JSON.parse(event.data);
+            console.log("Daten werden ausgelesen: ", obj.xMotor, obj.zMotor);
+            x.value = obj.xMotor;
+            z.value = obj.zMotor;
+        }
+
+        socket.onerror = (err) => console.error(err.message);
+
+        function sendMessage(msg){
+            console.log(msg);
+            socket.send(msg);
+        }
+
+  </script>
+</head>
+<body>
+
+    <select id="selectionBox">
+        <option value="0">Simulation 0</option>
+        <option value="1">Simulation 1</option>
+        <option value="2">Simulation 2</option>
+    </select>
+
+    <div class="divX">
+        <button onclick="sendMessage(`G1 x` + (Number(x.value) +10).toString());"> X + 10</button>
+        <button onclick="sendMessage(`G1 x` + (Number(x.value) +1).toString());"> X + 1</button>
+        <input inputmode="numeric" id="x" onchange="sendMessage('G1 x'+x.value)"> </input>
+        <button onclick="sendMessage(`G1 x` + (Number(x.value) -1).toString());"> X - 1 </button>
+        <button onclick="sendMessage(`G1 x` + (Number(x.value) -10).toString());"> X -10</button>
+    </div>
+
+    <div class="divZ">
+        <button onclick="sendMessage(`G1 z` + (Number(z.value) +10).toString());"> Z + 10</button>
+        <button onclick="sendMessage(`G1 z` + (Number(z.value) +1).toString());"> Z + 1</button>
+        <input inputmode="numeric" id="z" onchange="sendMessage('G1 z'+z.value)"> </input>
+        <button onclick="sendMessage(`G1 z` + (Number(z.value) -1).toString());"> Z - 1 </button>
+        <button onclick="sendMessage(`G1 z` + (Number(z.value) -10).toString());"> Z -10</button>
+    </div>
+</body>
+</html>

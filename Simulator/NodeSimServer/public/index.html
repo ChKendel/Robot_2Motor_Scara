@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roboter Simulation</title>
+  <style>
+    body { margin: 0; }
+    canvas { display: block; }
+    #selectionBox {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10; /* Ensure the selection box is in front of the canvas */
+    }
+    #controllerButton{
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+  <select id="selectionBox">
+    <option value="0">Simulation 0</option>
+    <option value="1">Simulation 1</option>
+    <option value="2">Simulation 2</option>
+  </select>
+  <button id="controllerButton" onclick="window.open('input.html')">Input</button>
+
+    <script type="importmap">{"imports": {"three": "/modules/three/build/three.module.min.js"} }</script>
+
+    <script type="module" src="main.js"></script>
+
+    <script src="WebService.js" defer></script>
+
+    <!--
+    <script type="module" src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/jsm/webxr/VRButton.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/jsm/webxr/XRControllerModelFactory.js"></script>
+    
+    
+    <script src="coordinateSystemPosition.js"></script>
+    <script src="coordinateSystemMotorPosition.js"></script>
+    -->
+    
+</body>
+</html>

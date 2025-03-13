@@ -1,0 +1,11 @@
+version: '3'
+services:
+  robotsimulation:
+    build: .
+    ports:
+      - "5080:5080"
+    environment:
+      - RUN_PORT=5080
+    volumes:
+      - ./NodeSimServer:/app
+      - /app/node_modules
