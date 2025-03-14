@@ -35,6 +35,7 @@
         
 
         socket.onopen = () => { console.log('Connected');  
+                                window.WSSocket = socket;
                                 pingInterval = setInterval(() => {  lastPingRequest = Date.now();
                                                                                 socket.send("Ping");
                                                                             }, 5000)};    
@@ -60,11 +61,18 @@
             socket.send(msg);
         }
 
+        function selectSimNr(event){
+            console.log("Selected: SimNr=" + window.selectionBox.value);
+            if(window.WSSocket){
+                window.WSSocket.send("simNr=" + window.selectionBox.value)
+                window.WSSocket.send("?")
+            }
+        }
   </script>
 </head>
 <body>
 
-    <select id="selectionBox">
+    <select id="selectionBox" onchange="selectSimNr(event);">
         <option value="0">Simulation 0</option>
         <option value="1">Simulation 1</option>
         <option value="2">Simulation 2</option>
@@ -85,5 +93,10 @@
         <button onclick="sendMessage(`G1 z` + (Number(z.value) -1).toString());"> Z - 1 </button>
         <button onclick="sendMessage(`G1 z` + (Number(z.value) -10).toString());"> Z -10</button>
     </div>
+
+    <script>
+
+
+    </script>
 </body>
 </html>
