@@ -2,7 +2,7 @@ class GCodeReceiver{
 
     constructor(){
       
-        var maxSimNr = process.env.RUN_MAX_SIM_COUNT || 5
+        var maxSimNr = process.env.RUN_MAX_SIM_COUNT || 25
 
         this.x = Array(maxSimNr).fill(0);
         this.z = Array(maxSimNr).fill(0);

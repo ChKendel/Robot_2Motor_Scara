@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from '/modules/three/build/three.module.min.js';
 import { FontLoader } from '/modules/three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from '/modules/three/examples/jsm/geometries/TextGeometry.js';
 
