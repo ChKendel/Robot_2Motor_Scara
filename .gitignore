@@ -1,1 +1,3 @@
 Simulator/NodeSimServer/node_modules/
+Sender/__pycache__
+.gitignore
