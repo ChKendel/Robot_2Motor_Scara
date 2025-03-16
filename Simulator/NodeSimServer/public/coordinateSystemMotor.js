@@ -86,7 +86,7 @@ export class coordinateSystemMotor{
             }
             this.xMotorStrOld = this.xMotorStr;
             delete this.xMotorLabel;
-            this.xMotorLabel = new TextGeometry(this.xMotorStr, {font: window.fontUsed,size: 8,height: 0.3,});
+            this.xMotorLabel = new TextGeometry(this.xMotorStr, {font: window.fontUsed,size: 8,depth: 0.3,});
             delete this.xMotorLabelMesh;
             this.xMotorLabelMesh = new THREE.Mesh(this.xMotorLabel, this.material);
             this.xMotorLabelMesh.position.y = 50;
@@ -139,7 +139,7 @@ export class coordinateSystemMotor{
                 this.zMotorLabelMesh.material.dispose();
             }
             this.zMotorStrOld = this.zMotorStr;
-            this.zMotorLabel = new TextGeometry(this.zMotorStr, {font: window.fontUsed,size: 8,height: 0.3,});
+            this.zMotorLabel = new TextGeometry(this.zMotorStr, {font: window.fontUsed,size: 8,depth: 0.3,});
             this.zMotorLabelMesh = new THREE.Mesh(this.zMotorLabel, this.material);
             this.zMotorLabelMesh.position.y = 70;
             this.zMotorLabelMesh.position.x = this.upperArmLength*Math.cos(motorX) + 55;

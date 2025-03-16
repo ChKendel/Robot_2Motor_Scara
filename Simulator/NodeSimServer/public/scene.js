@@ -8,9 +8,11 @@ import { VRButton } from '/modules/three/examples/jsm/webxr/VRButton.js';
 
 export function createScene() {
 
+    const robotGroup = new THREE.Group();
+
     // Setup the scene, camera, and renderer
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 10000);
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setClearColor( 0xffffff );
@@ -40,7 +42,7 @@ export function createScene() {
         meshBasis = new THREE.Mesh(geometry, material);
         meshBasis.rotation.x += THREE.MathUtils.degToRad(-90);
         meshBasis.rotation.z += THREE.MathUtils.degToRad(90);
-        scene.add( meshBasis );
+        robotGroup.add( meshBasis );
       });
 
     loader.load( './3DModels/UpperArm.stl', function ( geometry ) {
@@ -49,7 +51,7 @@ export function createScene() {
         window.meshUpperArm = new THREE.Mesh(geometry, material)
         window.meshUpperArm.rotation.x += THREE.MathUtils.degToRad(90);
         window.meshUpperArm.position.y += 29;
-        scene.add( window.meshUpperArm );
+        robotGroup.add( window.meshUpperArm );
     });
     loader.load( './3DModels/LowerArm.stl', function ( geometry ) {
         const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
@@ -57,7 +59,7 @@ export function createScene() {
         window.meshLowerArm.rotation.x += THREE.MathUtils.degToRad(-90);
         window.meshLowerArm.position.y = 54;
         window.meshLowerArm.position.x = 148
-        scene.add( window.meshLowerArm );
+        robotGroup.add( window.meshLowerArm );
     });
 
 
@@ -96,10 +98,13 @@ export function createScene() {
     
     window.spherePosition = new THREE.Mesh(geometrySphere, materialSphere);
     window.spherePosition.position.y = -7;
-    scene.add(window.spherePosition);
+    robotGroup.add(window.spherePosition);
     
 
 
+    //robotGroup.scale.set(0.1, 0.1, 0.1);
+
+    scene.add(robotGroup)
     return [camera, renderer, scene];
 }
 

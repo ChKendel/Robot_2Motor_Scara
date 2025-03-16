@@ -46,7 +46,7 @@ export class coordinateSystemPosition{
         let xStr = String(x - x%1);
         if(this.xLabelOldValue != xStr){
           this.xLabel.dispose();
-          this.xLabel = new TextGeometry(xStr, {font: window.fontUsed,size: 10,height: 0.3,});
+          this.xLabel = new TextGeometry(xStr, {font: window.fontUsed,size: 10,depth: 0.3,});
           this.xLabelMesh.geometry.dispose();
           this.xLabelMesh.geometry = this.xLabel;    
         }
@@ -55,7 +55,7 @@ export class coordinateSystemPosition{
         let yStr = String(-1*(y - y%1));
         if(this.yLabelOldValue != yStr){
           this.yLabel.dispose();
-          this.yLabel = new TextGeometry(yStr, {font: window.fontUsed,size: 10,height: 0.3,});
+          this.yLabel = new TextGeometry(yStr, {font: window.fontUsed,size: 10,depth: 0.3,});
           this.yLabelMesh.geometry.dispose();
           this.yLabelMesh.geometry = this.yLabel;    
         }
@@ -93,14 +93,14 @@ export class coordinateSystemPosition{
     if(window.fontUsed != null && window.spherePosition != null && this.xLabel == null){
       let xStr = String(x - x%1);
       this.xLabelOldValue = xStr;
-      this.xLabel = new TextGeometry(xStr, {font: window.fontUsed,size: 10,height: 0.3,});
+      this.xLabel = new TextGeometry(xStr, {font: window.fontUsed,size: 10,depth: 0.3,});
       this.xLabelMesh = new THREE.Mesh(this.xLabel, this.materialX);
       this.xLabelMesh.position.x = x;
       scene.add(this.xLabelMesh);
 
       let yStr = String(-1*(y - y%1));
       this.yLabelOldValue = yStr;
-      this.yLabel = new TextGeometry(yStr, {font: window.fontUsed,size: 10,height: 0.3,});
+      this.yLabel = new TextGeometry(yStr, {font: window.fontUsed,size: 10,depth: 0.3,});
       this.yLabelMesh = new THREE.Mesh(this.yLabel, this.materialY);
       this.yLabelMesh.position.z = y;
       scene.add(this.yLabelMesh);

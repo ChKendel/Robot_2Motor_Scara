@@ -32,11 +32,12 @@ const coordsysMot = new coordinateSystemMotor()
 
 let posZeroUpperArmAngle = 0;
 let posZeroLowerArmAngle = 0;
+let xHand = 0;
+let yHand = 0;
+
 let upperArmLength = 148;
 let lowerArmLength = 148;
 
-let xHand = 0;
-let yHand = 0;
 
 // Animation loop
 function render(time) {
