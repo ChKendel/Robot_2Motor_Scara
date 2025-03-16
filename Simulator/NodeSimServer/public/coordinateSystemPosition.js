@@ -9,6 +9,9 @@ export class coordinateSystemPosition{
 
   constructor(){
 
+    this.coordPositionGroup = new THREE.Group();
+    this.scaleFactorApplied = false;
+
     this.geometryX = new THREE.BoxGeometry(330, 2, 2);
     this.materialX = new THREE.MeshBasicMaterial({ color: 0x11aa22 });
 
@@ -31,14 +34,13 @@ export class coordinateSystemPosition{
     this.cylinderY = null;
 
     console.log("Postion is created");
+
   }
 
   drawPosition(scene, x, y){
       
-  
+    
     if(window.fontUsed != null && window.spherePosition != null && this.xLabel != null){
-
-
 
       window.spherePosition.position.x = x;
       window.spherePosition.position.z = y;
@@ -64,7 +66,7 @@ export class coordinateSystemPosition{
         this.cylinderPosition.position.z = y;
         this.cylinderPosition.position.x = x;
 
-        scene.remove(this.cylinderX);   
+        this.coordPositionGroup.remove(this.cylinderX);   
         
         if (this.geometryCX) this.geometryCX.dispose();
         this.geometryCX = new THREE.CylinderGeometry(0.4, 0.4, y, 12); // Top radius, bottom radius, height, radial segments
@@ -74,9 +76,9 @@ export class coordinateSystemPosition{
         this.cylinderX.position.x = x;
         this.cylinderX.position.z = y/2
         this.cylinderX.position.y = -7;
-        scene.add(this.cylinderX)
+        this.coordPositionGroup.add(this.cylinderX)
 
-        scene.remove(this.cylinderY);   
+        this.coordPositionGroup.remove(this.cylinderY);   
         
         if (this.geometryCY) this.geometryCY.dispose();
         this.geometryCY = new THREE.CylinderGeometry(0.4, 0.4, -x, 12); // Top radius, bottom radius, height, radial segments
@@ -86,7 +88,7 @@ export class coordinateSystemPosition{
         this.cylinderY.position.z = y;
         this.cylinderY.position.x = x/2
         this.cylinderY.position.y = -7;
-        scene.add(this.cylinderY)
+        this.coordPositionGroup.add(this.cylinderY)
     }
         
 
@@ -96,32 +98,38 @@ export class coordinateSystemPosition{
       this.xLabel = new TextGeometry(xStr, {font: window.fontUsed,size: 10,depth: 0.3,});
       this.xLabelMesh = new THREE.Mesh(this.xLabel, this.materialX);
       this.xLabelMesh.position.x = x;
-      scene.add(this.xLabelMesh);
+      this.coordPositionGroup.add(this.xLabelMesh);
 
       let yStr = String(-1*(y - y%1));
       this.yLabelOldValue = yStr;
       this.yLabel = new TextGeometry(yStr, {font: window.fontUsed,size: 10,depth: 0.3,});
       this.yLabelMesh = new THREE.Mesh(this.yLabel, this.materialY);
       this.yLabelMesh.position.z = y;
-      scene.add(this.yLabelMesh);
+      this.coordPositionGroup.add(this.yLabelMesh);
 
 
       const materialSphere = new THREE.MeshBasicMaterial({color: 0x1122aa,transparent: true,opacity: 0.9});
       let geometryC = new THREE.CylinderGeometry(1.4, 1.4, 50, 12); // Top radius, bottom radius, height, radial segments
       this.cylinderPosition = new THREE.Mesh(geometryC, materialSphere);
       this.cylinderPosition.position.y= 28
-      scene.add(this.cylinderPosition)
+      this.coordPositionGroup.add(this.cylinderPosition)
 
       let geometryCX = new THREE.CylinderGeometry(1.0, 1.0, 50, 12); // Top radius, bottom radius, height, radial segments
       this.cylinderX = new THREE.Mesh(geometryCX, this.materialX);
       this.cylinderX.rotation.x =  Math.PI / 2;
       this.cylinderX.position.z = - 30;
-      scene.add(this.cylinderX)
+      this.coordPositionGroup.add(this.cylinderX)
 
       let geometryCY = new THREE.CylinderGeometry(1.0, 1.0, 50, 12); // Top radius, bottom radius, height, radial segments
       this.cylinderY = new THREE.Mesh(geometryCY, this.materialY);
       this.cylinderY.rotation.z =  Math.PI / 2;
-      scene.add(this.cylinderY)
+      this.coordPositionGroup.add(this.cylinderY)
+    }
+
+    if(!this.scaleFactorApplied){
+      this.coordPositionGroup.scale.set(window.scaleFactor, window.scaleFactor, window.scaleFactor);
+      scene.add(this.coordPositionGroup)
+      this.scaleFactorApplied = true;
     }
   } 
 }

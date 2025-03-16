@@ -3,6 +3,7 @@ FROM node:22
 
 # Install Python and pip
 RUN apt-get update 
+RUN apt-get install -y vim
 
 # Create and set the working directory
 WORKDIR /app

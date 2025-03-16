@@ -8,8 +8,10 @@ export class coordinateSystemMotor{
 
     constructor() {
 
-        this.radius = 50;
+        this.coordMotorGroup = new THREE.Group();
+        this.scaleFactorApplied = false;
 
+        this.radius = 50;
 
         this.meshXMotor = null;
         this.meshZMotor = null;
@@ -50,8 +52,8 @@ export class coordinateSystemMotor{
     drawMotorAngles(scene, motorX, motorZ){
 
         if(this.meshXMotor != null){
-            scene.remove(this.meshXMotor);
-            scene.remove(this.meshZMotor);
+            this.coordMotorGroup.remove(this.meshXMotor);
+            this.coordMotorGroup.remove(this.meshZMotor);
 
             this.meshXMotor.geometry.dispose()
             this.meshXMotor.material.dispose()
@@ -73,14 +75,14 @@ export class coordinateSystemMotor{
         this.meshXMotor = new THREE.Mesh(this.geometry, this.material);
         this.meshXMotor.rotation.x = -Math.PI/2;
         this.meshXMotor.position.y = 39;
-        scene.add(this.meshXMotor);
+        this.coordMotorGroup.add(this.meshXMotor);
 
 
         this.x = (motorX*180/Math.PI)%360;
         this.xMotorStr = "xMotor: " + String(-1*(this.x - this.x%1));   
         if(this.xMotorStrOld != this.xMotorStr){ 
             if(this.xMotorLabelMesh != null){
-                scene.remove(this.xMotorLabelMesh);
+                this.coordMotorGroup.remove(this.xMotorLabelMesh);
                 this.xMotorLabelMesh.geometry.dispose();
                 this.xMotorLabelMesh.material.dispose();
             }
@@ -91,7 +93,7 @@ export class coordinateSystemMotor{
             this.xMotorLabelMesh = new THREE.Mesh(this.xMotorLabel, this.material);
             this.xMotorLabelMesh.position.y = 50;
             this.xMotorLabelMesh.position.x = 55;
-            scene.add(this.xMotorLabelMesh);
+            this.coordMotorGroup.add(this.xMotorLabelMesh);
         }
 
         // X-Motor-Reference-Axis
@@ -101,12 +103,12 @@ export class coordinateSystemMotor{
             this.xAxisMotor = new THREE.Mesh(this.geometryX, this.materialX);
             this.xAxisMotor.position.x += 35;
             this.xAxisMotor.position.y = 39;
-            scene.add(this.xAxisMotor);
+            this.coordMotorGroup.add(this.xAxisMotor);
 
             this.x2AxisMotor = new THREE.Mesh(this.geometryX, this.materialX);
             this.x2AxisMotor.position.x += 35;
             this.x2AxisMotor.position.y = 67;
-            scene.add(this.x2AxisMotor);
+            this.coordMotorGroup.add(this.x2AxisMotor);
         }
 
         this.x2AxisMotor.position.x = 35 + this.upperArmLength*Math.cos(motorX);
@@ -128,13 +130,13 @@ export class coordinateSystemMotor{
 
         this.meshZMotor.position.x = this.upperArmLength*Math.cos(motorX);
         this.meshZMotor.position.z = this.upperArmLength*Math.sin(motorX);
-        scene.add(this.meshZMotor);
+        this.coordMotorGroup.add(this.meshZMotor);
 
         this.z = -(motorZ*180/Math.PI)%360;
         this.zMotorStr = "zMotor: " + String(-1*(this.z - this.z%1));  
         if(this.zMotorStrOld != this.zMotorStr){ 
             if(this.zMotorLabelMesh != null){
-                scene.remove(this.zMotorLabelMesh);
+                this.coordMotorGroup.remove(this.zMotorLabelMesh);
                 this.zMotorLabelMesh.geometry.dispose(); 
                 this.zMotorLabelMesh.material.dispose();
             }
@@ -144,13 +146,18 @@ export class coordinateSystemMotor{
             this.zMotorLabelMesh.position.y = 70;
             this.zMotorLabelMesh.position.x = this.upperArmLength*Math.cos(motorX) + 55;
             this.zMotorLabelMesh.position.z = this.upperArmLength*Math.sin(motorX);
-            scene.add(this.zMotorLabelMesh);
+            this.coordMotorGroup.add(this.zMotorLabelMesh);
         }
         else if(this.zMotorLabelMesh != null){
             this.zMotorLabelMesh.position.x = this.upperArmLength*Math.cos(motorX) + 55;
             this.zMotorLabelMesh.position.z = this.upperArmLength*Math.sin(motorX);
         }
-        
+
+        if(!this.scaleFactorApplied){
+            this.coordMotorGroup.scale.set(window.scaleFactor, window.scaleFactor, window.scaleFactor);
+            scene.add(this.coordMotorGroup)
+            this.scaleFactorApplied = true;
+        }   
     }
 
 }

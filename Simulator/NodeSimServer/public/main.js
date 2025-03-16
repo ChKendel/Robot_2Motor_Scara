@@ -3,6 +3,9 @@ import { OrbitControls } from '/modules/three/examples/jsm/controls/OrbitControl
 import { XRControllerModelFactory } from '/modules/three/examples/jsm/webxr/XRControllerModelFactory.js';
 import { VRButton } from '/modules/three/examples/jsm/webxr/VRButton.js';
 
+
+window.scaleFactor = 0.001
+
 import {createScene, resizeRendererToDisplaySize} from './scene.js';
 import {createSystem} from './coordinateSystem.js';
 import {coordinateSystemPosition} from './coordinateSystemPosition.js'

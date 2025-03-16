@@ -4,8 +4,8 @@ import time
 
 
 #r = Robot("localhost", 5080, robotNr=1)
-r = Robot("sim.schooltech.ch", 80)
-#r = Robot("10.98.41.34",5081)
+#r = Robot("sim.schooltech.ch", 80)
+r = Robot("fluidnc.local",81)
 #r = Robot("10.98.41.34",5061)
 
 while True:

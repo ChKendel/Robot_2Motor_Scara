@@ -66,9 +66,10 @@ export function createScene() {
 
     
     // Set the camera position
-    camera.position.x = 150;
-    camera.position.y = 300;
-    camera.position.z = 150;
+    camera.position.x = 150 * window.scaleFactor;
+    camera.position.y = 300 * window.scaleFactor;
+    camera.position.z = 150 * window.scaleFactor;
+
 
     // Initialize OrbitControls
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -81,6 +82,9 @@ export function createScene() {
 
     // Make the camera look at a specific point (e.g., the origin)
     const target = new THREE.Vector3(150, 0, -50);
+    target.x *= window.scaleFactor;
+    target.y *= window.scaleFactor;
+    target.z *= window.scaleFactor;
     camera.lookAt(target);
 
     // Update the controls target
@@ -102,7 +106,7 @@ export function createScene() {
     
 
 
-    //robotGroup.scale.set(0.1, 0.1, 0.1);
+    robotGroup.scale.set(window.scaleFactor, window.scaleFactor, window.scaleFactor);
 
     scene.add(robotGroup)
     return [camera, renderer, scene];

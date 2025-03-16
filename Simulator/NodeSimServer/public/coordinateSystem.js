@@ -77,7 +77,7 @@ fontLoader.load('/modules/three/examples/fonts/helvetiker_regular.typeface.json'
   coordSystemGroup.add(textMeshY300);
 })
 
-//coordSystemGroup.scale.set(0.5, 0.5, 0.5);
+coordSystemGroup.scale.set(window.scaleFactor, window.scaleFactor, window.scaleFactor);
 scene.add(coordSystemGroup)
 
 
