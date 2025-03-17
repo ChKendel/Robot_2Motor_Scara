@@ -48,7 +48,6 @@ export function createScene() {
     loader.load( './3DModels/UpperArm.stl', function ( geometry ) {
         const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
         window.meshUpperArm = new THREE.Mesh(geometry, material);
-        window.meshUpperArm = new THREE.Mesh(geometry, material)
         window.meshUpperArm.rotation.x += THREE.MathUtils.degToRad(90);
         window.meshUpperArm.position.y += 29;
         robotGroup.add( window.meshUpperArm );
