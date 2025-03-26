@@ -74,6 +74,11 @@ class Robot:
             
         
         r = math.sqrt(x**2 + y**2)
+ 
+        if(r == 0):
+            self.gotoMotorXZ(0,-180,feed)
+            return
+
         phi = math.asin(y/r)
         if(x < 0):
             phi = math.pi - phi
