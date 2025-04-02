@@ -73,14 +73,17 @@ class Robot:
             x = self.CoordX
         if(y == None):
             y = self.CoordY
-            
+
         
         r = math.sqrt(x**2 + y**2)
-        
         if(r == 0):
             self.gotoMotorXZ(0,-180,feed)
-            return
-        
+            return            
+
+        phi = math.asin(y/r)
+        if(x < 0):
+            phi = math.pi - phi
+
         if(r  > 2*self.arm):
             print("Ausserhalb des gültigen Bereiches")
             self.gotoMotorXZ(120, 0, feed)
