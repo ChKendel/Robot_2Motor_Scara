@@ -88,12 +88,7 @@ class Robot:
             print("Ausserhalb des gültigen Bereiches")
             self.gotoMotorXZ(120, 0, feed)
             return
-
-        phi = math.asin(y/r)
-
-        if(x < 0):
-            phi = math.pi - phi
-            
+    
         #Cos-Satz für a b r und den Winkel am Origin
         EllbogenWinkel = math.acos((2*((self.arm)**2)-(r)**2)/(2*((self.arm)**2)))
         MotorXminusPhi =  math.acos(((r)**2)/(2*self.arm*r))
