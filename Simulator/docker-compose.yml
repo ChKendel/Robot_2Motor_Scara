@@ -8,4 +8,5 @@ services:
       - RUN_PORT=5080
     volumes:
       - ./NodeSimServer:/app
+      - ./NodeSimServer/logs:/app/logs
       - /app/node_modules

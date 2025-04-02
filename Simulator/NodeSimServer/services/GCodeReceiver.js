@@ -2,7 +2,7 @@ class GCodeReceiver{
 
     constructor(){
       
-        var maxSimNr = process.env.RUN_MAX_SIM_COUNT || 25
+        var maxSimNr = process.env.RUN_MAX_SIM_COUNT || 100
 
         this.x = Array(maxSimNr).fill(0);
         this.z = Array(maxSimNr).fill(0);
@@ -27,7 +27,7 @@ class GCodeReceiver{
             if(s.includes("z")){ this.z[simNr]  = Number(s.substring(1, s.length));}
           });
         }
-        console.log("Empfangen: ", g, simNr, this.z[simNr]);
+        //console.log("Empfangen: ", g, simNr, this.z[simNr]);
         return(`{"Message":"GCode message received","simNr":"${simNr}", "xMotor":"${this.x[simNr]}", "zMotor":"${this.z[simNr]}"}`);
     }
 

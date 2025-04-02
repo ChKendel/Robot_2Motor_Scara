@@ -1,3 +1,4 @@
 Simulator/NodeSimServer/node_modules/
+Simulator/NodeSimServer/logs
 Sender/__pycache__
 .gitignore

@@ -14,7 +14,7 @@ class Robot:
         self.CoordX = 0.0
         self.CoordY = 0.0
         self.lastPing = time.time()
-        print(self.lastPing)
+        print("Ping at time ",  self.lastPing)
         self.ws = websocket.WebSocket()
         self.ws.connect(f"ws://{host}:{port}")
         self.rec_thread = threading.Thread(target=self.receiver)
@@ -23,6 +23,8 @@ class Robot:
         self.ws.send("?")
         self.ping_thread = threading.Thread(target=self.send_ping)
         self.ping_thread.start()
+        print("Access should be ok")
+    
 
         if(robotNr > 0):
             self.ws.send("simNr="+str(robotNr))
@@ -38,13 +40,13 @@ class Robot:
     # response at a predictable time
     def receiver(self):
         while self.isRunning:
-            for l in self.ws.recv().splitlines():
-                if isinstance(l, str):
-                    #print(l)
-                    self.processResponse(l)
+            for oneLine in self.ws.recv().splitlines():
+                if isinstance(oneLine, str):
+                    #print(oneLine)
+                    self.processResponse(oneLine)
                 else:
-                    #print(str(l, 'utf-8'))
-                    self.processResponse(str(l, 'utf-8'))
+                    #print(str(oneLine, 'utf-8'))
+                    self.processResponse(str(oneLine, 'utf-8'))
 
     def send(self, msg):
         self.ws.send(msg)
@@ -74,15 +76,21 @@ class Robot:
             
         
         r = math.sqrt(x**2 + y**2)
-        phi = math.asin(y/r)
-        if(x < 0):
-            phi = math.pi - phi
-
+        
+        if(r == 0):
+            self.gotoMotorXZ(0,-180,feed)
+            return
+        
         if(r  > 2*self.arm):
             print("Ausserhalb des gültigen Bereiches")
             self.gotoMotorXZ(120, 0, feed)
             return
-        
+
+        phi = math.asin(y/r)
+
+        if(x < 0):
+            phi = math.pi - phi
+            
         #Cos-Satz für a b r und den Winkel am Origin
         EllbogenWinkel = math.acos((2*((self.arm)**2)-(r)**2)/(2*((self.arm)**2)))
         MotorXminusPhi =  math.acos(((r)**2)/(2*self.arm*r))

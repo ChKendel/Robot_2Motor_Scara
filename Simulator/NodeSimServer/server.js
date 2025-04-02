@@ -15,8 +15,12 @@ const receiver = new GCodeReceiver();
 const SimWebSocket = require('./services/SimWebSocket.js')
 const simWS = new SimWebSocket(server, receiver);
 
+const Logger = require('./services/Logger.js')
+
 const port = process.env.RUN_PORT || 5080
 
 server.listen(port, () => {
-    console.log(`Server is running on http://localhost:`,port);
+    var m = `Server is running on http://localhost:${port}`;
+    console.log(m);
+    Logger.getInstance().log(m)
 });
